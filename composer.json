@@ -1,0 +1,13 @@
+{
+    "name": "alex/blog",
+    "authors": [
+        {
+            "name": "Alex",
+            "email": "a_peant@orange.fr"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "App\\": "src/" }
+    },
+    "require": {}
+}
