@@ -1,8 +1,18 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
+
+use App\Router;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
 
 require '../vendor/autoload.php';
+define('DEBUG_TIME', microtime(true));
 
-echo 'ok';
+$whoops = new Run;
+$whoops->pushHandler(new PrettyPageHandler);
+$whoops->register();
+
+$router = new Router(dirname(__DIR__) . '/views');
+$router
+    ->get('/blog', 'post/index', 'blog')
+    ->get('/blog/category', 'category/show', 'category')
+    ->run();
