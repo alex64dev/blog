@@ -12,6 +12,8 @@ class Category
 
     private $slug;
 
+    private $post_id;
+
     /**
      * @return mixed
      */
@@ -63,6 +65,24 @@ class Category
     public function setSlug($slug)
     {
         $this->slug = $slug;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostId(): ?int
+    {
+        return $this->post_id;
+    }
+
+    /**
+     * @param mixed $post_id
+     * @return Category
+     */
+    public function setPostId($post_id)
+    {
+        $this->post_id = $post_id;
         return $this;
     }
 

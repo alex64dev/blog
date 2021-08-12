@@ -1,16 +1,16 @@
 <?php
 
+use App\Connect;
 use App\Model\Post;
 use App\PaginatedQuery;
+use App\Table\PostTable;
 
 $title = "Mon blog";
+$pdo = Connect::getPdo();
 
-/* Pagination */
-$queryList = "SELECT * FROM post ORDER BY created_at DESC";
-$queryCount = "SELECT COUNT(id) FROM post";
-$paginatedQuery = new PaginatedQuery($queryList, $queryCount);
+/** @var PaginatedQuery $paginate */
 
-$posts = $paginatedQuery->getItems(Post::class);
+[$posts, $paginate] = (new PostTable($pdo))->getPaginated();
 
 $link = $router->generate_url('home');
 ?>
@@ -18,16 +18,15 @@ $link = $router->generate_url('home');
 <h1>Mon blog</h1>
 
 <div class="row">
-    <?php /** @var Post $post */
-    foreach ($posts as $post): ?>
+    <?php foreach ($posts as $post): ?>
         <div class="col-md-3">
             <?php require 'card.php' ?>
         </div>
      <?php endforeach ?>
 
     <div class="d-flex justify-content-between my-4">
-        <?= $paginatedQuery->previousLink($link) ?>
+        <?= $paginate->previousLink($link) ?>
 
-        <?= $paginatedQuery->nextLink($link) ?>
+        <?= $paginate->nextLink($link) ?>
     </div>
 </div>

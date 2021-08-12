@@ -29,7 +29,7 @@ Class Post{
      * @param mixed $id
      * @return Post
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
         return $this;
@@ -47,7 +47,7 @@ Class Post{
      * @param mixed $name
      * @return Post
      */
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
         return $this;
@@ -65,7 +65,7 @@ Class Post{
      * @param mixed $slug
      * @return Post
      */
-    public function setSlug($slug)
+    public function setSlug($slug): self
     {
         $this->slug = $slug;
         return $this;
@@ -83,7 +83,7 @@ Class Post{
      * @param mixed $content
      * @return Post
      */
-    public function setContent($content)
+    public function setContent($content): self
     {
         $this->content = $content;
         return $this;
@@ -103,14 +103,14 @@ Class Post{
      * @param mixed $created_at
      * @return Post
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt($created_at): self
     {
         $this->created_at = $created_at;
         return $this;
     }
 
     /**
-     * @return array
+     * @return Category[]
      */
     public function getCategories(): array
     {
@@ -118,12 +118,29 @@ Class Post{
     }
 
     /**
-     * @param array $categories
-     * @return Post
+     * @param Category $category
+     * @return $this
      */
-    public function setCategories(array $categories): Post
+    public function addCategory(Category $category): self
     {
-        $this->categories = $categories;
+        if(!in_array($category, $this->categories, true)){
+            $this->categories[] = $category;
+        }
+        return $this;
+    }
+
+    /**
+     * @param Category $category
+     * @return $this
+     */
+    public function removeCategory(Category $category): self
+    {
+        $key = array_search($category, $this->categories, true);
+
+        if ($key) {
+            unset($this->categories[$key]);
+        }
+
         return $this;
     }
 
