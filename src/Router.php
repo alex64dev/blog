@@ -42,10 +42,16 @@ Class Router
     {
         $match = $this->router->match();
         $view = $match['target'];
+        $params = $match['params'];
+        $router = $this;
         ob_start();
         require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
         $content = ob_get_clean();
         require $this->viewPath . DIRECTORY_SEPARATOR . 'layouts/default.php';
         return $this;
+    }
+
+    public function generate_url(string $name, $params = []){
+        return $this->router->generate($name, $params);
     }
 }

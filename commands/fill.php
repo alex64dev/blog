@@ -1,8 +1,10 @@
 <?php
+
+use App\Connect;
+
 require dirname(__DIR__).'/vendor/autoload.php';
-$pdo = new PDO('mysql:dbname=tutoblog;host=127.0.0.1', 'alex', 'root', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-]);
+
+$pdo = $pdo = Connect::getPdo();
 
 $pdo->exec('SET FOREIGN_KEY_CHECKS = 0');
 $pdo->exec('TRUNCATE TABLE post_category');
@@ -17,7 +19,7 @@ $posts = [];
 $categories = [];
 
 for ($i = 0; $i < 50; $i++){
-    $pdo->exec("INSERT INTO post SET name = '{$faker->sentence()}', slug = '{$faker->slug()}', created_at = '{$faker->date()} {$faker->time}', content = '{$faker->paragraph(rand(3,15), true)}'");
+    $pdo->exec("INSERT INTO post SET name = '{$faker->sentence()}', slug = '{$faker->slug()}', created_at = '{$faker->date()} {$faker->time}', content = '{$faker->paragraphs(rand(3,15), true)}'");
     $posts[] = $pdo->lastInsertId();
 }
 
