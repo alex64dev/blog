@@ -47,7 +47,7 @@ Class Post{
      * @param mixed $name
      * @return Post
      */
-    public function setName($name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
@@ -65,7 +65,7 @@ Class Post{
      * @param mixed $slug
      * @return Post
      */
-    public function setSlug($slug): self
+    public function setSlug(string $slug): self
     {
         $this->slug = $slug;
         return $this;
@@ -76,6 +76,14 @@ Class Post{
      */
     public function getContent(): ?string
     {
+        return $this->content;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFormatedContent(): ?string
+    {
         return nl2br(htmlentities($this->content));
     }
 
@@ -83,7 +91,7 @@ Class Post{
      * @param mixed $content
      * @return Post
      */
-    public function setContent($content): self
+    public function setContent(string $content): self
     {
         $this->content = $content;
         return $this;
@@ -103,7 +111,7 @@ Class Post{
      * @param mixed $created_at
      * @return Post
      */
-    public function setCreatedAt($created_at): self
+    public function setCreatedAt(string $created_at): self
     {
         $this->created_at = $created_at;
         return $this;

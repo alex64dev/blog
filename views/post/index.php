@@ -1,7 +1,6 @@
 <?php
 
 use App\Connect;
-use App\Model\Post;
 use App\PaginatedQuery;
 use App\Table\PostTable;
 

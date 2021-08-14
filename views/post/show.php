@@ -10,6 +10,7 @@ $id = (int)$params['id'];
 $slug = $params['slug'];
 
 $pdo = Connect::getPdo();
+/** @var Post $post */
 $post = (new PostTable($pdo))->find($id);
 (new CategoryTable($pdo))->hydratePosts([$post]);
 
@@ -31,4 +32,4 @@ if($post->getSlug() !== $slug){
         <?= htmlentities($category->getName()) ?>
     </a>
 <?php } ?>
-<p><?= $post->getContent() ?></p>
+<p><?= $post->getFormatedContent() ?></p>
