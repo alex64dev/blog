@@ -3,6 +3,7 @@
 use App\Connect;
 use App\Html\Form;
 use App\Model\Post;use App\Table\PostTable;
+use App\Validators\PostValidator;
 use Valitron\Validator;
 
 $pdo = Connect::getPdo();
@@ -14,12 +15,8 @@ $success = false;
 $errors = [];
 
 if(!empty($_POST)){
-    Validator::lang('fr');
-    $v = new Validator($_POST);
-    $v->rule('required', ['name', 'slug']);
-    $v->rule('lengthBetween', ['name', 'slug'], 3, 200);
-    $v->setPrependLabels(false);
 
+    $v = new PostValidator($_POST, $postTable, $post->getId());
     $post->setName($_POST['name'])
         ->setContent($_POST['content'])
         ->setSlug($_POST['slug'])
