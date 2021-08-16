@@ -28,6 +28,9 @@
                 </li>
             </ul>
         </div>
+        <div class="navbar-nav">
+            <a class="nav-link" aria-current="page" href="<?= $router->generate_url('home') ?>">Déconnexion</a>
+        </div>
     </div>
 </nav>
 

@@ -22,6 +22,9 @@
                     </li>
                 </ul>
             </div>
+            <div class="navbar-nav">
+                <a class="nav-link" aria-current="page" href="<?= $router->generate_url('admin_dashboard') ?>">Admin</a>
+            </div>
         </div>
     </nav>
 
