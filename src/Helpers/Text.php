@@ -10,7 +10,7 @@ Class Text {
      * Function which cut a string
      */
     public static function excerpt(string $content, int $limit = 60){
-        if (mb_strlen($content <= $limit)){
+        if (mb_strlen($content) <= $limit){
             return $content;
         }
 
