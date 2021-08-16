@@ -8,5 +8,4 @@ Auth::check();
 $pdo = Connect::getPdo();
 $table = new PostTable($pdo);
 $table->delete((int)$params['id']);
-header('location: ' . $router->generate_url('admin') . '?delete=1');
-?>
+header('location: ' . $router->generate_url('admin_posts') . '?delete=1');

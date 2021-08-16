@@ -6,7 +6,7 @@ namespace App\Table;
 
 use App\Model\Category;
 use App\Model\Post;
-use App\Table\Exception\NotFoundException;
+use App\PaginatedQuery;
 use \PDO;
 
 final class CategoryTable extends Table
@@ -35,5 +35,24 @@ final class CategoryTable extends Table
         foreach ($categories as $category) {
             $postByIds[$category->getPostId()]->addCategory($category);
         }
+    }
+
+    public function getPaginated() {
+        $paginatedQuery = new PaginatedQuery(
+            "SELECT * FROM {$this->table}",
+            "SELECT COUNT(id) FROM {$this->table}",
+            $this->pdo
+        );
+
+        /** @var Category[] $categories */
+        $categories = $paginatedQuery->getItems($this->className);
+
+        return [$categories, $paginatedQuery];
+
+    }
+
+    public function findAll(): array
+    {
+        return $this->queryFetchAll("SELECT * FROM {$this->table} ORDER BY id DESC");
     }
 }

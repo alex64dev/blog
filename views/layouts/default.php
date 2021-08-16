@@ -20,9 +20,6 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="<?= $router->generate_url('home') ?>">Accueil</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Catégories</a>
-                    </li>
                 </ul>
             </div>
         </div>

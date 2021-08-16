@@ -17,12 +17,12 @@ class Form
         $this->is_require = $is_require;
     }
 
-    public function input(string $name, string $label): string
+    public function input(string $name, string $label, bool $is_require = true): string
     {
         $is_invalid = $this->isInvalid($name);
         $feedback = $this->getFeedback($name);
         $value = $this->getValue($name);
-        $require = $this->is_require ? 'required' : '';
+        $require = $is_require ? 'required' : '';
 
         return "
         <div class='mb-3'>
@@ -32,12 +32,12 @@ class Form
         </div>";
     }
 
-    public function textArea(string $name, string $label): string
+    public function textArea(string $name, string $label, bool $is_require = true): string
     {
         $is_invalid = $this->isInvalid($name);
         $feedback = $this->getFeedback($name);
         $value = $this->getValue($name);
-        $require = $this->is_require ? 'required' : '';
+        $require = $is_require ? 'required' : '';
 
         return "
         <div class='mb-3'>
@@ -47,7 +47,7 @@ class Form
         </div>";
     }
 
-    private function getValue(string $name): string
+    private function getValue(string $name): ?string
     {
         if(is_array($this->data)){
             return $this->data[$name];
