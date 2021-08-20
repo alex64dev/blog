@@ -94,4 +94,16 @@ abstract class Table
     {
         return $this->pdo->query($sql, PDO::FETCH_CLASS, $this->className)->fetchAll();
     }
+
+    public function findBy(string $property)
+    {
+        $query = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE {} = :property");
+        $query->execute([':property' => $property]);
+        $query->setFetchMode(PDO::FETCH_CLASS, $this->className);
+        $result =  $query->fetch();
+        if($result === false){
+            throw new NotFoundException($this->table, $property);
+        }
+        return $result;
+    }
 }

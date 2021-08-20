@@ -3,6 +3,7 @@
     <?= $form->input('slug', 'Url'); ?>
     <?= $form->textArea('content', 'Contenu', false); ?>
     <?= $form->input('created_at', 'Date de création'); ?>
+    <?= $form->select('categories_ids', 'Catégories', $categories); ?>
 
     <button class="btn btn-primary">
         <?php if($post->getId() !== null )

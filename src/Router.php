@@ -2,6 +2,7 @@
 namespace App;
 
 use AltoRouter;
+use App\Security\ForbiddenException;
 
 Class Router
 {
@@ -53,15 +54,26 @@ Class Router
     public function run() :self
     {
         $match = $this->router->match();
-        $view = $match['target'];
-        $params = $match['params'];
+        if($match !== false){
+            $view = $match['target'];
+            $params = $match['params'];
+        }else{
+            $view = 'error404';
+        }
+
         $router = $this;
         $isAdmin = strpos($view, 'admin') !== false;
         $layout = $isAdmin ? 'admin/layouts/default' : 'layouts/default';
-        ob_start();
-        require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
-        $content = ob_get_clean();
-        require $this->viewPath . DIRECTORY_SEPARATOR . $layout . '.php';
+        try {
+            ob_start();
+            require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
+            $content = ob_get_clean();
+            require $this->viewPath . DIRECTORY_SEPARATOR . $layout . '.php';
+        } catch (ForbiddenException $e) {
+            header('location: ' . $this->generate_url('login') . '?forbidden=1');
+            exit();
+        }
+
         return $this;
     }
 

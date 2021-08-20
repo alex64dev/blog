@@ -56,16 +56,26 @@ final class PostTable extends Table
             'slug' => $post->getSlug(),
             'created_at' => $post->getCreatedAt()->format('y-m-d h:i:s')
         ], $post->getId());
-
     }
 
     public function newPost(Post $post)
     {
-        $this->new([
+        $postId = $this->new([
             'name' => $post->getName(),
             'content' => $post->getContent(),
             'slug' => $post->getSlug(),
             'created_at' => $post->getCreatedAt()->format('y-m-d h:i:s')
         ]);
+        $post->setId($postId);
+    }
+
+    public function joinCategories(int $id, array $categories)
+    {
+        $this->pdo->exec("DELETE FROM post_category WHERE post_id = {$id}");
+
+        $query = $this->pdo->prepare("INSERT INTO post_category SET post_id = ?, category_id = ?");
+        foreach ($categories as $category) {
+            $query->execute([$id, $category]);
+        }
     }
 }

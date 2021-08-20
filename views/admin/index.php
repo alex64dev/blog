@@ -1,4 +1,9 @@
 <?php
+
+use App\Auth;
+
+Auth::check();
+
 $title = "Tableau de bord admin";
 ?>
 

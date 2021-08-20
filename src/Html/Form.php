@@ -19,6 +19,7 @@ class Form
 
     public function input(string $name, string $label, bool $is_require = true): string
     {
+        $type = $name === "password" ? "password" : "text";
         $is_invalid = $this->isInvalid($name);
         $feedback = $this->getFeedback($name);
         $value = $this->getValue($name);
@@ -27,7 +28,7 @@ class Form
         return "
         <div class='mb-3'>
             <label for='{$name}'>{$label}</label>
-            <input type='text' id='{$name}' class='form-control {$is_invalid}' name='{$name}' value='{$value}' {$require}>
+            <input type='{$type}' id='{$name}' class='form-control {$is_invalid}' name='{$name}' value='{$value}' {$require}>
             {$feedback}
         </div>";
     }
@@ -47,10 +48,31 @@ class Form
         </div>";
     }
 
-    private function getValue(string $name): ?string
+    public function select(string $name, string $label, array $options = [], bool $is_require = true)
+    {
+        $optionsHtml = [];
+        $categories_ids = $this->getValue($name);
+        foreach ($options as $key => $value){
+            $select = in_array($key, $categories_ids) ? ' selected' : '';
+            $optionsHtml[] = "<option {$select} value='$key'>{$value}</option>";
+        }
+        $optionsHtml = implode('', $optionsHtml);
+        $is_invalid = $this->isInvalid($name);
+        $feedback = $this->getFeedback($name);
+        $require = $is_require ? 'required' : '';
+
+        return "
+        <div class='mb-3'>
+            <label for='{$name}'>{$label}</label>
+            <select multiple id='{$name}' class='form-control {$is_invalid}' name='{$name}[]' {$require}>{$optionsHtml}</select>
+            {$feedback}
+        </div>";
+    }
+
+    private function getValue(string $name)
     {
         if(is_array($this->data)){
-            return $this->data[$name];
+            return $this->data[$name] ?? null;
         }
 
         $method = "get".str_replace(' ', '', ucwords(str_replace('_', ' ', $name)));
@@ -68,6 +90,14 @@ class Form
 
     private function getFeedback($name): string
     {
-        return isset($this->errors[$name]) ? '<div class="invalid-feedback"> ' . implode("<br>", $this->errors[$name]) . '</div>' : '';
+        if(isset($this->errors[$name])){
+            if(is_array($this->errors[$name])) {
+                $error = implode("<br>", $this->errors[$name]);
+            }else{
+                $error = $this->errors[$name];
+            }
+            return isset($this->errors[$name]) ? '<div class="invalid-feedback"> ' . $error . '</div>' : '';
+        }
+        return "";
     }
 }

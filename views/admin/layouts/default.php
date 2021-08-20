@@ -29,7 +29,9 @@
             </ul>
         </div>
         <div class="navbar-nav">
-            <a class="nav-link" aria-current="page" href="<?= $router->generate_url('home') ?>">Déconnexion</a>
+            <form action="<?= $router->generate_url('logout') ?>" method="post">
+                <button class="nav-link" aria-current="page" style="background: transparent; border: none;" >Déconnexion</button>
+            </form>
         </div>
     </div>
 </nav>
