@@ -31,7 +31,7 @@ $link = $router->generate_url('category', ['id' => $id, 'slug' => $category->get
 <h1 class="card-title"><?= htmlentities($title) ?></h1>
 
 <div class="d-flex justify-content-center">
-    <img src="<?= $category->getRealPath() ?>" class="my-4" alt="categorie image" width="150px" height="auto">
+    <img src="<?= (is_null($category->getFile()) ? "/images/no-image-icon.png" : $category->getRealPath()) ?>" class="my-4" alt="categorie image" width="150px" height="auto">
 </div>
 
 <div class="row">

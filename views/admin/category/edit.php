@@ -25,7 +25,6 @@ $errors = [];
 if(!empty($_POST)){
 
     $v = new CategoryValidator($_POST, $categoryTable, $_FILES, $category->getId());
-//    Entity::hydrate($category, $_POST, ['name', 'slug']);
     $is_upload = (new Upload())->upload($_FILES, 'file');
 
     if($v->validate()){

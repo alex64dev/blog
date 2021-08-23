@@ -64,7 +64,7 @@ class Upload
 
     public function checkImage($data, $name)
     {
-        if(!empty($data) ) {
+        if(!empty($data) && $data[$name]["size"] > 0) {
 
             $target = $this->getTargetFile($data, $name);
             $this->existImage($target);

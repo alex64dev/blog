@@ -7,6 +7,7 @@ use App\Html\Alert;
 use App\Html\Form;
 use App\Model\Category;
 use App\Table\CategoryTable;
+use App\Upload;
 use App\Validators\CategoryValidator;
 
 Auth::check();
@@ -21,13 +22,14 @@ if(!empty($_POST)){
     $pdo = Connect::getPdo();
     $categoryTable = new CategoryTable($pdo);
 
-    $v = new CategoryValidator($_POST, $categoryTable);
-    Entity::hydrate($category, $_POST, ['name', 'slug']);
+    $v = new CategoryValidator($_POST, $categoryTable, $_FILES);
+    $is_upload = (new Upload())->upload($_FILES, 'file');
 
     if($v->validate()){
         $categoryTable->new([
-            'name' => $category->getName(),
-            'slug' => $category->getSlug()
+            'name' => $_POST['name'],
+            'slug' => $_POST['slug'],
+            'file' => $is_upload ? $_FILES["file"]["name"] : null
         ]);
         header('location: ' . $router->generate_url('admin_categories') . '?new=1');
         exit();
