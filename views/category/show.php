@@ -1,6 +1,7 @@
 <?php
 
 use App\Connect;
+use App\Model\Category;
 use App\Model\Post;
 use App\Table\CategoryTable;
 use App\Table\PostTable;
@@ -10,6 +11,7 @@ $slug = $params['slug'];
 
 $pdo = Connect::getPdo();
 
+/** @var Category $category */
 $category = (new CategoryTable($pdo))->find($id);
 
 if($category->getSlug() !== $slug){
@@ -27,6 +29,10 @@ $link = $router->generate_url('category', ['id' => $id, 'slug' => $category->get
 ?>
 
 <h1 class="card-title"><?= htmlentities($title) ?></h1>
+
+<div class="d-flex justify-content-center">
+    <img src="<?= $category->getRealPath() ?>" class="my-4" alt="categorie image" width="150px" height="auto">
+</div>
 
 <div class="row">
     <?php /** @var Post $post */

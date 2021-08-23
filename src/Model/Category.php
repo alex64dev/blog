@@ -14,6 +14,8 @@ class Category
 
     private $post_id;
 
+    private $file;
+
     /**
      * @return mixed
      */
@@ -86,5 +88,27 @@ class Category
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $path
+     * @return Category
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+        return $this;
+    }
+
+    public function getRealPath()
+    {
+        return "/uploads/" . $this->getfile();
+    }
 
 }

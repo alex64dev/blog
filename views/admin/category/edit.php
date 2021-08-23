@@ -7,6 +7,7 @@ use App\Html\Alert;
 use App\Html\Form;
 use App\Model\Category;
 use App\Table\CategoryTable;
+use App\Upload;
 use App\Validators\CategoryValidator;
 
 Auth::check();
@@ -23,23 +24,30 @@ $errors = [];
 
 if(!empty($_POST)){
 
-    $v = new CategoryValidator($_POST, $categoryTable, $category->getId());
-    Entity::hydrate($category, $_POST, ['name', 'slug']);
+    $v = new CategoryValidator($_POST, $categoryTable, $_FILES, $category->getId());
+//    Entity::hydrate($category, $_POST, ['name', 'slug']);
+    $is_upload = (new Upload())->upload($_FILES, 'file');
 
     if($v->validate()){
         $categoryTable->edit([
-                'name' => $category->getName(),
-            'slug' => $category->getSlug()
+            'name' => $_POST['name'],
+            'slug' => $_POST['slug'],
+            'file' => $is_upload ? $_FILES["file"]["name"] : $category->getFile()
         ], $category->getId());
-        $success = true;
+        header("location: " . $router->generate_url('admin_category_edit', ['id' => $category->getId()]) . "?update=1");
+        exit();
     }else{
         $errors = $v->errors();
     }
 }
 $form = new Form($category, $errors);
 
-if($success):
-    echo Alert::render('success', "La catégorie a été modifié");
+if(isset($_GET['update'])):
+    echo Alert::render('success', "La catégorie a été modifiée");
+endif;
+
+if(isset($_GET['delete-img'])):
+    echo Alert::render('success', "L'image a été supprimée");
 endif;
 
 if(!empty($errors)):

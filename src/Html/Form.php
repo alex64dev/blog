@@ -19,7 +19,7 @@ class Form
 
     public function input(string $name, string $label, bool $is_require = true): string
     {
-        $type = $name === "password" ? "password" : "text";
+        $type = $name === "password" ? "password" : ($name === "file" ? "file" : "text");
         $is_invalid = $this->isInvalid($name);
         $feedback = $this->getFeedback($name);
         $value = $this->getValue($name);

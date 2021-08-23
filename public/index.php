@@ -39,5 +39,6 @@ $router
     ->get('/admin/category' , 'admin/category/index', 'admin_categories')
     ->match('/admin/category/edit/[i:id]' , 'admin/category/edit', 'admin_category_edit')
     ->post('/admin/category/delete/[i:id]' , 'admin/category/delete', 'admin_category_delete')
+    ->get('/admin/category/remove/[i:id]' , 'admin/category/removeImage', 'admin_category_remove')
     ->match('/admin/category/new' , 'admin/category/new', 'admin_category_new')
     ->run();
