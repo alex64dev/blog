@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Articles</h1>
+
+        <div class="row">
+            {% for post in posts %}
+                {% include('layout/postCard.html.twig') %}
+            {% endfor %}
+
+            <div class="d-flex justify-content-between my-4">
+                {{ paginate.previousLink("/blog/posts")|raw }}
+
+                {{ paginate.nextLink("/blog/posts")|raw }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

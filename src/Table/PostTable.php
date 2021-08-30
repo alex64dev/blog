@@ -78,4 +78,11 @@ final class PostTable extends Table
             $query->execute([$id, $category]);
         }
     }
+
+    public function getListWithLimit($limit = 3)
+    {
+        return $this->pdo->query("SELECT * FROM post ORDER BY created_at DESC LIMIT {$limit}")
+            ->fetchAll(PDO::FETCH_CLASS, $this->className)
+            ;
+    }
 }

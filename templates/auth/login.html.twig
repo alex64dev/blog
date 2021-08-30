@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Se connecter</h1>
+
+        {% if forbidden is defined %}
+            {{ forbidden|raw }}
+        {% endif %}
+
+        <form action="/login" method="post">
+            {{ username|raw }}
+            {{ password|raw }}
+            <button class="btn btn-primary">Valider</button>
+        </form>
+    </div>
+{% endblock %}

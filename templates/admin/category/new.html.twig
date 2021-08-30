@@ -1,0 +1,15 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Ajout d'une catégorie{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Ajouter une catégorie</h1>
+
+    {% if errors is defined %}
+        {{ errors|raw }}
+    {% endif %}
+
+    {% include('admin/category/_form.html.twig') %}
+</div>
+{% endblock %}

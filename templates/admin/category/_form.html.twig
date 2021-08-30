@@ -1,0 +1,27 @@
+<form action="" method="post" enctype="multipart/form-data">
+    {{ form.input('name', 'Nom')|raw }}
+    {{ form.input('slug', 'Url')|raw }}
+
+    {{ category.getFile() }}
+    {% if category.getFile() is not empty %}
+        <div class='mb-3'>
+            <img src="{{ category.getRealPath() }}" class="my-4" alt="categorie image" width="150px" height="auto">
+            <a href="/admin/category/remove/{{ category.getId() }}"
+               style="display: inline"
+               class="btn btn-danger">
+                Supprimer
+            </a>
+        </div>
+    {% else %}
+        {{ form.input('file', 'Logo', false)|raw }}
+    {% endif %}
+
+    <button class="btn btn-primary">
+        {% if category.getId() is not null %}
+            Éditer
+        {% else %}
+            Ajouter
+        {% endif %}
+    </button>
+    <a href="/admin/categories" class="btn btn-info">Retour</a>
+</form>

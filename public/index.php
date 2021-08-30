@@ -24,21 +24,30 @@ if(isset($_GET['page']) && $_GET['page'] === '1'){
     exit();
 }
 
-$router = new Router(dirname(__DIR__) . '/views');
+$router = new Router();
 $router
-    ->get('/', 'post/index', 'home')
-    ->get('/blog/category/[*:slug]-[i:id]', 'category/show', 'category')
-    ->get('/blog/[*:slug]-[i:id]', 'post/show', 'post')
-    ->match('/login', 'auth/login', 'login')
-    ->match('/logout', 'auth/logout', 'logout')
-    ->get('/admin' , 'admin/index', 'admin_dashboard')
-    ->get('/admin/post' , 'admin/post/index', 'admin_posts')
-    ->match('/admin/post/edit/[i:id]' , 'admin/post/edit', 'admin_post_edit')
-    ->post('/admin/post/delete/[i:id]' , 'admin/post/delete', 'admin_post_delete')
-    ->match('/admin/post/new' , 'admin/post/new', 'admin_post_new')
-    ->get('/admin/category' , 'admin/category/index', 'admin_categories')
-    ->match('/admin/category/edit/[i:id]' , 'admin/category/edit', 'admin_category_edit')
-    ->post('/admin/category/delete/[i:id]' , 'admin/category/delete', 'admin_category_delete')
-    ->get('/admin/category/remove/[i:id]' , 'admin/category/removeImage', 'admin_category_remove')
-    ->match('/admin/category/new' , 'admin/category/new', 'admin_category_new')
+    /* HOME */
+    ->get('/', 'App\Controller\HomeController#index', 'home')
+    /* CATEGORY */
+    ->get('/blog/categories', 'App\Controller\CategoryController#categories', 'categories')
+    ->get('/blog/category/[*:slug]-[i:id]', 'App\Controller\CategoryController#show', 'category')
+    /* POST */
+    ->get('/blog/posts', 'App\Controller\PostController#posts', 'posts')
+    ->get('/blog/[*:slug]-[i:id]', 'App\Controller\PostController#show', 'post')
+    /* LOGIN */
+    ->match('/login', 'App\Controller\AuthController#login', 'login')
+    ->match('/logout', 'App\Controller\AuthController#logout', 'logout')
+    /* ADMIN */
+    ->get('/admin' , 'App\Controller\Admin\AdminController#index', 'admin_dashboard')
+    ->get('/admin/posts' , 'App\Controller\PostController#index', 'admin_posts')
+    ->match('/admin/post/edit/[i:id]' , 'App\Controller\PostController#edit', 'admin_post_edit')
+    ->post('/admin/post/delete/[i:id]' , 'App\Controller\PostController#delete', 'admin_post_delete')
+    ->match('/admin/post/new' , 'App\Controller\PostController#new', 'admin_post_new')
+    ->get('/admin/categories' , 'App\Controller\CategoryController#index', 'admin_categories')
+    ->match('/admin/category/edit/[i:id]' , 'App\Controller\CategoryController#edit', 'admin_category_edit')
+    ->post('/admin/category/delete/[i:id]' , 'App\Controller\CategoryController#delete', 'admin_category_delete')
+    ->get('/admin/category/remove/[i:id]' , 'App\Controller\CategoryController#removeImage', 'admin_category_remove')
+    ->match('/admin/category/new' , 'App\Controller\CategoryController#new', 'admin_category_new')
+    /* 404 */
+    ->get('/error_404', 'App\Controller\ErrorsController#error404', 'error_404')
     ->run();

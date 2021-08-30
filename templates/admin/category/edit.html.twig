@@ -1,0 +1,23 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Édition d'une catégorie{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Éditer {{ category.getName() }}</h1>
+
+        {% if success is defined %}
+            {{ success|raw }}
+        {% endif %}
+
+        {% if delete-img is defined %}
+            {{ delete-img|raw }}
+        {% endif %}
+
+        {% if errors is defined %}
+            {{ errors|raw }}
+        {% endif %}
+
+        {% include('admin/category/_form.html.twig') %}
+    </div>
+{% endblock %}

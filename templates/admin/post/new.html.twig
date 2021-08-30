@@ -1,0 +1,15 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Ajout d'un article{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Ajouter un post</h1>
+
+    {% if errors is defined %}
+        {{ errors|raw }}
+    {% endif %}
+
+    {% include('admin/post/_form.html.twig') %}
+</div>
+{% endblock %}

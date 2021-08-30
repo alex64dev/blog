@@ -46,7 +46,7 @@ class PaginatedQuery
         return $this->items;
     }
 
-    public function previousLink(string $link): ?string
+    public function previousLink(string $link)
     {
         $currentPage = $this->getCurrentPage();
         if($currentPage <= 1) return null;
@@ -54,7 +54,7 @@ class PaginatedQuery
         return "<a href='{$link}' class='btn btn-primary'>&laquo; Page précédente</a>";
     }
 
-    public function nextLink(string $link): ?string
+    public function nextLink(string $link)
     {
         $currentPage = $this->getCurrentPage();
         if($currentPage >= $this->getCountPages()) return null;

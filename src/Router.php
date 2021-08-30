@@ -7,44 +7,38 @@ use App\Security\ForbiddenException;
 Class Router
 {
     /**
-     * @var string
-     */
-    private $viewPath;
-
-    /**
      * @var AltoRouter
      */
     private $router;
 
-    public function __construct(string $viewPath)
+    public function __construct()
     {
-        $this->viewPath = $viewPath;
         $this->router = new AltoRouter();
     }
 
 
     /**
      * @param string $url
-     * @param string $view
+     * @param string $controller
      * @param string|null $name
      * @return $this
      * @throws \Exception
      */
-    public function get(string $url, string $view, ?string $name = null) :self
+    public function get(string $url, string $controller, ?string $name = null) :self
     {
-        $this->router->map('GET', $url, $view, $name);
+        $this->router->map('GET', $url, $controller, $name);
         return $this;
     }
 
-    public function post(string $url, string $view, ?string $name = null) :self
+    public function post(string $url, string $controller, ?string $name = null) :self
     {
-        $this->router->map('POST', $url, $view, $name);
+        $this->router->map('POST', $url, $controller, $name);
         return $this;
     }
 
-    public function match(string $url, string $view, ?string $name = null) :self
+    public function match(string $url, string $controller, ?string $name = null) :self
     {
-        $this->router->map('POST|GET', $url, $view, $name);
+        $this->router->map('POST|GET', $url, $controller, $name);
         return $this;
     }
 
@@ -54,26 +48,23 @@ Class Router
     public function run() :self
     {
         $match = $this->router->match();
+
         if($match !== false){
-            $view = $match['target'];
-            $params = $match['params'];
+            list($controller, $action) = explode('#', $match['target']);
+            $obj = new $controller();
+            if ( is_callable([$obj, $action]) ) {
+                try {
+                    call_user_func_array([$obj, $action], [$match['params']]);
+                } catch (ForbiddenException $e) {
+                    header('location: ' . $this->generate_url('login') . '?forbidden=1');
+                    exit();
+                }
+            } else {
+
+            }
         }else{
-            $view = 'error404';
+            header('location: ' . $this->generate_url('error_404'));
         }
-
-        $router = $this;
-        $isAdmin = strpos($view, 'admin') !== false;
-        $layout = $isAdmin ? 'admin/layouts/default' : 'layouts/default';
-        try {
-            ob_start();
-            require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
-            $content = ob_get_clean();
-            require $this->viewPath . DIRECTORY_SEPARATOR . $layout . '.php';
-        } catch (ForbiddenException $e) {
-            header('location: ' . $this->generate_url('login') . '?forbidden=1');
-            exit();
-        }
-
         return $this;
     }
 

@@ -1,0 +1,15 @@
+<div class="col-md-3">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">{{ post.getName() }}</h5>
+            <p class="text-muted">
+                {{ post.getCreatedAt()|date("d F Y") }}
+            </p>
+            <p>
+                {{ post.getCategories()|map(category => "#{category.getName()}")|join(', ') }}
+            </p>
+            <p>{{ post.getExcerpt()|raw }}</p>
+            <a href="/blog/{{ post.getSlug() }}-{{ post.id }}" class="btn btn-primary">Voir plus</a>
+        </div>
+    </div>
+</div>

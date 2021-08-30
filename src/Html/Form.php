@@ -64,7 +64,7 @@ class Form
         return "
         <div class='mb-3'>
             <label for='{$name}'>{$label}</label>
-            <select multiple id='{$name}' class='form-control {$is_invalid}' name='{$name}[]' {$require}>{$optionsHtml}</select>
+            <select multiple id='{$name}' class='select {$is_invalid}' name='{$name}[]' {$require}>{$optionsHtml}</select>
             {$feedback}
         </div>";
     }
