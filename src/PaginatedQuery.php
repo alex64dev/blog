@@ -66,7 +66,7 @@ class PaginatedQuery
         return URL::getPositiveInt('page', 1);
     }
 
-    private function getCountPages(): int
+    private function getCountPages(): float
     {
         if($this->count === null){
             $this->count = (int)$this->piloteData

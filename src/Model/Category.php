@@ -6,18 +6,18 @@ namespace App\Model;
 
 class Category
 {
-    private $id;
+    private ?int $id;
 
-    private $name;
+    private ?string $name;
 
-    private $slug;
+    private ?string $slug;
 
-    private $post_id;
+    private ?int $post_id;
 
-    private $file;
+    private ?string $file;
 
     /**
-     * @return mixed
+     * @return int|null
      */
     public function getId(): ?int
     {
@@ -28,14 +28,14 @@ class Category
      * @param mixed $id
      * @return Category
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getName(): ?string
     {
@@ -43,17 +43,17 @@ class Category
     }
 
     /**
-     * @param mixed $name
-     * @return Category
+     * @param string $name
+     * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getSlug(): ?string
     {
@@ -64,14 +64,14 @@ class Category
      * @param mixed $slug
      * @return Category
      */
-    public function setSlug($slug)
+    public function setSlug($slug): self
     {
         $this->slug = $slug;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
     public function getPostId(): ?int
     {
@@ -79,34 +79,37 @@ class Category
     }
 
     /**
-     * @param mixed $post_id
+     * @param int $post_id
      * @return Category
      */
-    public function setPostId($post_id)
+    public function setPostId($post_id): self
     {
         $this->post_id = $post_id;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getFile()
+    public function getFile(): ?string
     {
         return $this->file;
     }
 
     /**
-     * @param mixed $path
-     * @return Category
+     * @param string|null $file
+     * @return $this
      */
-    public function setFile($file)
+    public function setFile(?string $file): self
     {
         $this->file = $file;
         return $this;
     }
 
-    public function getRealPath()
+    /**
+     * @return string|null
+     */
+    public function getRealPath(): ?string
     {
         return "/uploads/" . $this->getfile();
     }

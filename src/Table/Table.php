@@ -3,6 +3,7 @@
 
 namespace App\Table;
 
+use App\Table\Exception\NotFoundException;
 use \PDO;
 
 abstract class Table
@@ -79,6 +80,7 @@ abstract class Table
 
     public function edit(array $data, int $id)
     {
+        $fields = [];
         foreach ($data as $key => $value) {
             $fields[] = "$key = :$key";
         }

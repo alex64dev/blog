@@ -8,6 +8,9 @@ use App\Security\ForbiddenException;
 
 class Auth
 {
+    /**
+     * @throws ForbiddenException
+     */
     public static function check(){
         if (session_status() === PHP_SESSION_NONE){
             session_start();

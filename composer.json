@@ -14,7 +14,8 @@
         "filp/whoops": "2.8.0",
         "fakerphp/faker": "^1.15",
         "vlucas/valitron": "1.4.10",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "phpstan/phpstan": "^0.12.97"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.3"

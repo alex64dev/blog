@@ -10,7 +10,7 @@ abstract class AbstractValidator
 {
     protected array $data;
     /**
-     * @var AbstractValidator
+     * @var Validator
      */
     protected Validator $validator;
 

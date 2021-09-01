@@ -44,7 +44,7 @@ Class Post{
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @return Post
      */
     public function setName(string $name): self
@@ -62,7 +62,7 @@ Class Post{
     }
 
     /**
-     * @param mixed $slug
+     * @param string $slug
      * @return Post
      */
     public function setSlug(string $slug): self
@@ -88,7 +88,7 @@ Class Post{
     }
 
     /**
-     * @param mixed $content
+     * @param string $content
      * @return Post
      */
     public function setContent(string $content): self
@@ -108,7 +108,7 @@ Class Post{
     }
 
     /**
-     * @param mixed $created_at
+     * @param string $created_at
      * @return Post
      */
     public function setCreatedAt(string $created_at): self
