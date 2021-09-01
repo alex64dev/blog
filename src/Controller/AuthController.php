@@ -31,7 +31,8 @@ class AuthController extends AbstractController
                     if(password_verify($_POST['password'], $u->getPassword()) === true){
                         session_start();
                         $_SESSION['auth'] = $u->getId();
-                        header('Location:/admin');
+                        $url = $this->url('admin_dashboard');
+                        header('Location: ' . $url);
                     }
                 } catch (NotFoundException $e) {
                 }
@@ -51,7 +52,8 @@ class AuthController extends AbstractController
     {
         session_start();
         session_destroy();
-        header('location: /login');
+        $url = $this->url('login');
+        header('location: ' . $url);
         exit();
     }
 }
