@@ -9,7 +9,7 @@
                 {{ post.getCategories()|map(category => "#{category.getName()}")|join(', ') }}
             </p>
             <p>{{ post.getExcerpt()|raw }}</p>
-            <a href="/blog/{{ post.getSlug() }}-{{ post.id }}" class="btn btn-primary">Voir plus</a>
+            <a href="{{ path('post', {'slug': post.getSlug(), 'id': post.id}) }}" class="btn btn-primary">Voir plus</a>
         </div>
     </div>
 </div>

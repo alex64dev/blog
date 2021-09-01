@@ -12,9 +12,9 @@
             {% endfor %}
 
             <div class="d-flex justify-content-between my-4">
-                {{ paginate.previousLink("/blog/posts")|raw }}
+                {{ paginate.previousLink(path('posts'))|raw }}
 
-                {{ paginate.nextLink("/blog/posts")|raw }}
+                {{ paginate.nextLink(path('posts'))|raw }}
             </div>
         </div>
     </div>

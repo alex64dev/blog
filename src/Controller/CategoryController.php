@@ -9,7 +9,6 @@ use App\Connect;
 use App\Html\Alert;
 use App\Html\Form;
 use App\Model\Category;
-use App\Router;
 use App\Table\CategoryTable;
 use App\Table\PostTable;
 use App\Upload;
@@ -34,7 +33,7 @@ class CategoryController extends AbstractController
         $category = (new CategoryTable($this->pdo))->find($id);
 
         if($category->getSlug() !== $slug){
-            $url = (new Router())->generate_url('category', ['id' => $id, 'slug' => $category->getSlug()]);
+            $url = $this->url('category', ['id' => $id, 'slug' => $category->getSlug()]);
             http_response_code(301);
             header('location: ' . $url);
         }
@@ -100,7 +99,8 @@ class CategoryController extends AbstractController
                     'slug' => $_POST['slug'],
                     'file' => $is_upload ? $_FILES["file"]["name"] : null
                 ]);
-                header('location: /admin/categories?new=1');
+                $url = $this->url('admin_categories',[], ['new' => 1]);
+                header('location: ' . $url);
                 exit();
             }else{
                 $errors = $v->errors();
@@ -131,19 +131,22 @@ class CategoryController extends AbstractController
         if(!empty($_POST)){
 
             $v = new CategoryValidator($_POST, $categoryTable, $_FILES, $category->getId());
-            $is_upload = (new Upload())->upload($_FILES, 'file');
 
-            $category->setName($_POST['name'])->setSlug($_POST['slug']);
-            if($is_upload):
-                $category->setFile($_FILES["file"]["name"]);
-            endif;
             if($v->validate()){
+                $is_upload = (new Upload())->upload($_FILES, 'file');
+
+                $category->setName($_POST['name'])->setSlug($_POST['slug']);
+                if($is_upload):
+                    $category->setFile($_FILES["file"]["name"]);
+                endif;
+
                 $categoryTable->edit([
                     'name' => $category->getName(),
                     'slug' => $category->getSlug(),
                     'file' => $category->getFile()
                 ], $category->getId());
                 $success = true;
+                unset($_GET['delete_img']);
             }else{
                 $errors = $v->errors();
             }
@@ -156,7 +159,7 @@ class CategoryController extends AbstractController
             'current_menu' => 'admin_category',
             'success' => !empty($success) ? Alert::render('success', "La catégorie a été modifiée") : '',
             'errors' => !empty($errors) ? Alert::render('danger', "La catégorie contient des erreurs, veuillez les corriger") : '',
-            'delete-img' => isset($_GET['delete-img']) ? Alert::render('success', "L'image a été supprimée") : ''
+            'delete_img' => isset($_GET['delete_img']) ? Alert::render('success', "L'image a été supprimée") : ''
         ));
     }
 
@@ -171,7 +174,8 @@ class CategoryController extends AbstractController
             unlink('uploads/'.$category->getFile());
         }
         $table->delete((int)$params['id']);
-        header('location: /admin/categories?delete=1');
+        $url = $this->url('admin_categories',[], ['delete' => 1]);
+        header('location: ' . $url);
     }
 
     public function removeImage($params)
@@ -190,7 +194,8 @@ class CategoryController extends AbstractController
             'slug' => $category->getSlug(),
             'file' => $category->getFile()
         ], $category->getId());
-        header('location: /admin/category/edit/' . $category->getId() . '?delete-img=1');
+        $url = $this->url('admin_category_edit',['id' => $category->getId()], ['delete_img' => 1]);
+        header('location: ' . $url);
     }
 
 }

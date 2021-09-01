@@ -9,7 +9,7 @@
         <div class="row">
             {% for category in categories %}
                 <div class="d-flex justify-content-center">
-                    <a href="/blog/category/{{ category.getSlug() }}-{{ category.id }}" title="{{ category.getName() }}">
+                    <a href="{{ path('category', {'id': category.id(), 'slug': category.getSlug()}) }}" title="{{ category.getName() }}">
                         <img src="{% if category.getFile() is not empty %}{{ category.getRealPath() }}{% else %}/images/no-image-icon.png{% endif %}" class="my-4" alt="categorie image" width="150px" height="auto">
                     </a>
                 </div>

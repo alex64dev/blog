@@ -24,7 +24,7 @@ if(isset($_GET['page']) && $_GET['page'] === '1'){
     exit();
 }
 
-$router = new Router();
+$router = Router::getInstance();
 $router
     /* HOME */
     ->get('/', 'App\Controller\HomeController#index', 'home')

@@ -35,7 +35,7 @@ class PaginatedQuery
             $currentPage = $this->getCurrentPage();
             $pages = $this->getCountPages();
             if($currentPage > $pages) {
-                throw new Exception('Cette page n\'existe pas');
+                return [];
             }
             $offset = $this->perPage * ($currentPage - 1 );
             $this->items = $this->piloteData

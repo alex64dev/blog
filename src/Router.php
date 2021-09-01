@@ -6,6 +6,16 @@ use App\Security\ForbiddenException;
 
 Class Router
 {
+    private static ?Router $_instance = null;
+
+    public static function getInstance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new Router();
+        }
+        return self::$_instance;
+    }
+
     /**
      * @var AltoRouter
      */
@@ -60,7 +70,7 @@ Class Router
                     exit();
                 }
             } else {
-
+                /* ERROR 500 Todo */
             }
         }else{
             header('location: ' . $this->generate_url('error_404'));

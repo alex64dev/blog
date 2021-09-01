@@ -39,7 +39,9 @@ final class PostTable extends Table
 
         $posts = $paginatedQuery->getItems($this->className);
 
-        (new CategoryTable($this->pdo))->hydratePosts($posts);
+        if(!empty($posts)){
+            (new CategoryTable($this->pdo))->hydratePosts($posts);
+        }
 
         return [$posts, $paginatedQuery];
     }

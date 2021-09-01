@@ -11,7 +11,6 @@ use App\Html\Alert;
 use App\Html\Form;
 use App\Model\Post;
 use App\PaginatedQuery;
-use App\Router;
 use App\Table\CategoryTable;
 use App\Table\PostTable;
 use App\Validators\PostValidator;
@@ -44,7 +43,7 @@ class PostController extends AbstractController
         (new CategoryTable($pdo))->hydratePosts([$post]);
 
         if($post->getSlug() !== $slug){
-            $url = (new Router())->generate_url('post', ['id' => $id, 'slug' => $post->getSlug()]);
+            $url = $this->url('post', ['id' => $id, 'slug' => $post->getSlug()]);
             http_response_code(301);
             header('location: ' . $url);
         }
@@ -70,9 +69,8 @@ class PostController extends AbstractController
             'posts' => $posts,
             'paginate' => $paginate,
             'current_menu' => 'admin_post',
-            'new' => isset($_GET['new']) ? Alert::render('success', "Le post a été ajouté") : '',
-            'delete' => isset($_GET['delete']) ? Alert::render('success', "Le post a été supprimé") : ''
-
+            'new' => isset($_GET['new']) ? Alert::render('success', "L'article a été ajouté") : '',
+            'delete' => isset($_GET['delete']) ? Alert::render('success', "L'article a été supprimé") : ''
         ));
     }
 
@@ -100,7 +98,8 @@ class PostController extends AbstractController
                 $postTable->joinCategories($post->getId(), $_POST['categories_ids']);
                 $pdo->commit();
 
-                header('location: /admin/posts?new=1');
+                $url = $this->url('admin_posts', [], ['new' => 1]);
+                header('location: '.$url);
                 exit();
             }else{
                 $errors = $v->errors();
@@ -113,7 +112,7 @@ class PostController extends AbstractController
             'form' => $form,
             'categories' => $categories,
             'current_menu' => 'admin_post',
-            'errors' => !empty($errors) ? Alert::render('danger', "L'article' contient des erreurs, veuillez les corriger") : ''
+            'errors' => !empty($errors) ? Alert::render('danger', "L'article contient des erreurs, veuillez les corriger") : ''
         ));
     }
 
@@ -136,9 +135,10 @@ class PostController extends AbstractController
         if(!empty($_POST)){
 
             $v = new PostValidator($_POST, $postTable, $categories, $post->getId());
-            Entity::hydrate($post, $_POST, ['name', 'content', 'slug', 'created_at']);
 
             if($v->validate()){
+                Entity::hydrate($post, $_POST, ['name', 'content', 'slug', 'created_at']);
+
                 $pdo->beginTransaction();
                 $postTable->editPost($post);
                 $postTable->joinCategories($post->getId(), $_POST['categories_ids']);
@@ -158,7 +158,7 @@ class PostController extends AbstractController
             'categories' => $categories,
             'current_menu' => 'admin_post',
             'success' => $success ? Alert::render('success', "Le post a été modifié") : '',
-            'errors' => !empty($errors) ? Alert::render('success', "Le post a été modifié") : ''
+            'errors' => !empty($errors) ? Alert::render('danger', "Le post contient des erreurs, veuillez les corriger") : ''
         ));
 
     }
@@ -169,6 +169,7 @@ class PostController extends AbstractController
         $pdo = Connect::getPdo();
         $table = new PostTable($pdo);
         $table->delete((int)$params['id']);
-        header('location: /admin/posts?delete=1');
+        $url = $this->url('admin_posts', [], ['delete' => 1]);
+        header('location: ' . $url);
     }
 }

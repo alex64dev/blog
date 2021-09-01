@@ -6,7 +6,7 @@
     {% if category.getFile() is not empty %}
         <div class='mb-3'>
             <img src="{{ category.getRealPath() }}" class="my-4" alt="categorie image" width="150px" height="auto">
-            <a href="/admin/category/remove/{{ category.getId() }}"
+            <a href="{{ path('admin_category_remove', {id: category.getId()}) }}"
                style="display: inline"
                class="btn btn-danger">
                 Supprimer
@@ -23,5 +23,5 @@
             Ajouter
         {% endif %}
     </button>
-    <a href="/admin/categories" class="btn btn-info">Retour</a>
+    <a href="{{ path('admin_categories') }}" class="btn btn-info">Retour</a>
 </form>

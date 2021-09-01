@@ -10,7 +10,7 @@
             {{ forbidden|raw }}
         {% endif %}
 
-        <form action="/login" method="post">
+        <form action="{{ path('login') }}" method="post">
             {{ username|raw }}
             {{ password|raw }}
             <button class="btn btn-primary">Valider</button>

@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="d-flex">
-                    <a href="/admin/post/new" class="btn btn-primary ms-auto">Ajouter un post</a>
+                    <a href="{{ path('admin_post_new') }}" class="btn btn-primary ms-auto">Ajouter un post</a>
                 </div>
             </div>
         </div>
@@ -35,14 +35,14 @@
                     {% for post in posts %}
                         <tr>
                             <th scope="row">
-                                <a href="/admin/post/edit/{{ post.getId() }}">
+                                <a href="{{ path('admin_post_edit', {'id' : post.getId()}) }}">
                                     {{ post.getName() }}
                                 </a>
                             </th>
                             <td>{{ post.getCreatedAt()|date('d F Y') }}</td>
                             <td>
-                                <a href="/admin/post/edit/{{ post.getId() }}" class="btn btn-primary">Éditer</a>
-                                <form action="/admin/post/delete/{{ post.getId() }}"
+                                <a href="{{ path('admin_post_edit', {'id' : post.getId()}) }}" class="btn btn-primary">Éditer</a>
+                                <form action="{{ path('admin_post_delete', {'id' : post.getId()}) }}"
                                       style="display: inline"
                                       method="POST"
                                       onsubmit="return confirm('Voulez-vous supprimer ce post ?')">
@@ -56,9 +56,9 @@
             </div>
 
             <div class="d-flex justify-content-between my-4">
-                {{ paginate.previousLink('/admin/posts') }}
+                {{ paginate.previousLink(path('admin_posts'))|raw }}
 
-                {{ paginate.nextLink('/admin/posts') }}
+                {{ paginate.nextLink(path('admin_posts'))|raw }}
             </div>
         </div>
     </div>

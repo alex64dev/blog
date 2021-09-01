@@ -13,6 +13,8 @@ class AdminController extends AbstractController
     public function index()
     {
         Auth::check();
-        echo $this->twig->render('admin/index.html.twig');
+        echo $this->twig->render('admin/layout/index.html.twig', [
+            'current_menu' => 'admin_home'
+        ]);
     }
 }
