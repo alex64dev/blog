@@ -146,7 +146,7 @@ class CategoryController extends AbstractController
                     'file' => $category->getFile()
                 ], $category->getId());
                 $success = true;
-                unset($_GET['delete_img']);
+                unset($_SESSION['delete_img']);
             }else{
                 $errors = $v->errors();
             }
@@ -159,7 +159,7 @@ class CategoryController extends AbstractController
             'current_menu' => 'admin_category',
             'success' => !empty($success) ? Alert::render('success', "La catégorie a été modifiée") : '',
             'errors' => !empty($errors) ? Alert::render('danger', "La catégorie contient des erreurs, veuillez les corriger") : '',
-            'delete_img' => isset($_GET['delete_img']) ? Alert::render('success', "L'image a été supprimée") : ''
+            'delete_img' => isset($_SESSION['delete_img']) ? Alert::render('success', "L'image a été supprimée") : ''
         ));
     }
 
@@ -194,7 +194,8 @@ class CategoryController extends AbstractController
             'slug' => $category->getSlug(),
             'file' => $category->getFile()
         ], $category->getId());
-        $url = $this->url('admin_category_edit',['id' => $category->getId()], ['delete_img' => 1]);
+        $_SESSION['delete_img'] = 1;
+        $url = $this->url('admin_category_edit',['id' => $category->getId()]);
         header('location: ' . $url);
     }
 
