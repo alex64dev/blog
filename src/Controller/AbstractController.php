@@ -19,6 +19,8 @@ abstract class AbstractController
 
     private ?Router $router;
 
+    protected int $debug_time = 0;
+
     public function __construct()
     {
         $this->router = Router::getInstance();
@@ -32,6 +34,12 @@ abstract class AbstractController
             return $this->router->generate_url($name, $parameters);
         });
         $this->twig->addFunction($path);
+
+        $this->debug_time = 0;
+        if (defined('DEBUG_TIME')):
+            $this->debug_time = round(1000 * (microtime(true) - DEBUG_TIME ));
+        endif;
+        $this->twig->addGlobal('debug_time', $this->debug_time);
     }
 
     public function url(string $name, array $parameters = [], array $params_sup = [])

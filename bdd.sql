@@ -11,6 +11,7 @@ create TABLE category (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     slug VARCHAR(255) NOT NULL,
+    file VARCHAR(255) NULL DEFAULT NULL,
     PRIMARY KEY (id)
 );
 
