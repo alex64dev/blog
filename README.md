@@ -34,3 +34,5 @@ Remove te file when it's done
 * **[Faker  »](https://github.com/FakerPHP/Faker)**
 
 * **[Valitron  »](https://github.com/vlucas/valitron)**
+
+* **[CKEditor 5  »](https://ckeditor.com/docs/ckeditor5/latest/index.html)**
