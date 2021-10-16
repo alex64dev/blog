@@ -33,17 +33,18 @@ class Form
         </div>";
     }
 
-    public function textArea(string $name, string $label, bool $is_require = true): string
+    public function textArea(string $name, string $label, bool $is_require = true, bool $isEditor = false): string
     {
         $is_invalid = $this->isInvalid($name);
         $feedback = $this->getFeedback($name);
         $value = $this->getValue($name);
         $require = $is_require ? 'required' : '';
+        $editor = $isEditor ? 'editor' : '';
 
         return "
         <div class='mb-3'>
             <label for='{$name}' class='form-label'>{$label}</label>
-            <textarea id='{$name}' class='form-control {$is_invalid}' name='{$name}' {$require} rows='3'>{$value}</textarea>
+            <textarea id='{$name}' class='form-control {$is_invalid} {$editor}' name='{$name}' {$require} rows='3'>{$value}</textarea>
             {$feedback}
         </div>";
     }

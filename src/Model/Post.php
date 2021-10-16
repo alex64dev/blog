@@ -179,6 +179,6 @@ Class Post{
         if(!$this->content){
             return null;
         }
-        return nl2br(htmlentities(Text::excerpt($this->content, 60)));
+        return Text::excerpt($this->content, 60);
     }
 }

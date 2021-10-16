@@ -7,6 +7,6 @@
         <h1 class="card-title">{{ post.getName() }}</h1>
         <p class="text-muted">{{ post.getCreatedAt()|date('d F Y') }}</p>
 
-        <p>{{ post.getFormatedContent()|raw }}</p>
+        <p>{{ post.getContent()|raw }}</p>
     </div>
 {% endblock %}

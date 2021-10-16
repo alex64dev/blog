@@ -1,7 +1,7 @@
 <form action="" method="post">
     {{ form.input('name', 'Titre')|raw }}
     {{ form.input('slug', 'Url')|raw }}
-    {{ form.textArea('content', 'Contenu', false)|raw }}
+    {{ form.textArea('content', 'Contenu', false, true)|raw }}
     {{ form.input('created_at', 'Date de création')|raw }}
     {{ form.select('categories_ids', 'Catégories', categories)|raw }}
 
