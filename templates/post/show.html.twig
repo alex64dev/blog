@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container mt-4">
         <h1 class="card-title">{{ post.getName() }}</h1>
-        <p class="text-muted">{{ post.getCreatedAt()|date('d F Y') }}</p>
+        <p class="text-muted">{{ post.getCreatedAt()|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}</p>
 
         <p>{{ post.getContent()|raw }}</p>
     </div>

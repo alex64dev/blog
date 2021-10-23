@@ -1,9 +1,9 @@
-<div class="col-md-3">
-    <div class="card mb-4">
+<div class="col-md-3 mb-4">
+    <div class="card">
         <div class="card-body">
             <h5 class="card-title">{{ post.getName() }}</h5>
             <p class="text-muted">
-                {{ post.getCreatedAt()|date("d F Y") }}
+                {{ post.getCreatedAt()|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}
             </p>
             <p>
                 {{ post.getCategories()|map(category => "#{category.getName()}")|join(', ') }}

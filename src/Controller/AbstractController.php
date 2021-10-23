@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Router;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
+use Twig\Extra\Intl\IntlExtension;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFunction;
 
@@ -40,6 +41,7 @@ abstract class AbstractController
             $this->debug_time = round(1000 * (microtime(true) - DEBUG_TIME ));
         endif;
         $this->twig->addGlobal('debug_time', $this->debug_time);
+        $this->twig->addExtension(new IntlExtension());
     }
 
     public function url(string $name, array $parameters = [], array $params_sup = [])

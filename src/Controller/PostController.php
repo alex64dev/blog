@@ -90,7 +90,7 @@ class PostController extends AbstractController
             $postTable = new PostTable($pdo);
 
             $v = new PostValidator($_POST, $postTable, $categories, $post->getId());
-            Entity::hydrate($post, $_POST, ['name', 'content', 'slug', 'created_at']);
+            Entity::hydrate($post, $_POST, ['name', 'content', 'slug']);
 
             if($v->validate()){
                 $pdo->beginTransaction();
@@ -137,7 +137,7 @@ class PostController extends AbstractController
             $v = new PostValidator($_POST, $postTable, $categories, $post->getId());
 
             if($v->validate()){
-                Entity::hydrate($post, $_POST, ['name', 'content', 'slug', 'created_at']);
+                Entity::hydrate($post, $_POST, ['name', 'content', 'slug']);
 
                 $pdo->beginTransaction();
                 $postTable->editPost($post);

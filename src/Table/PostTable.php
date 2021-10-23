@@ -56,7 +56,7 @@ final class PostTable extends Table
             'name' => $post->getName(),
             'content' => $post->getContent(),
             'slug' => $post->getSlug(),
-            'created_at' => $post->getCreatedAt()->format('y-m-d h:i:s')
+            'created_at' => $post->getCreatedAt()->format('y-m-d H:i:s')
         ], $post->getId());
     }
 
@@ -66,7 +66,7 @@ final class PostTable extends Table
             'name' => $post->getName(),
             'content' => $post->getContent(),
             'slug' => $post->getSlug(),
-            'created_at' => $post->getCreatedAt()->format('y-m-d h:i:s')
+            'created_at' => (new \DateTime())->format('y-m-d H:i:s')
         ]);
         $post->setId($postId);
     }
