@@ -39,8 +39,8 @@
                                     {{ post.getName() }}
                                 </a>
                             </th>
-                            <td>{{ post.getCreatedAt()|date('d F Y') }}</td>
-                            <td>
+                            <td>{{ post.getCreatedAt()|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}</td>
+                            <td class="text-end">
                                 <a href="{{ path('admin_post_edit', {'id' : post.getId()}) }}" class="btn btn-primary">Éditer</a>
                                 <form action="{{ path('admin_post_delete', {'id' : post.getId()}) }}"
                                       style="display: inline"
